@@ -1,9 +1,12 @@
 from rest_framework import viewsets
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 from .models import Document
 from .serializers import DocumentSerializer
 
 class DocumentViewSet(viewsets.ModelViewSet):
     queryset = Document.objects.select_related("owner").all()
     serializer_class = DocumentSerializer
-    permission_classes = [AllowAny]  # For now, no auth or RBAC
+    permission_classes = [IsAuthenticated]  # For now, no auth or RBAC
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)  # Automatically assign the logged-in user
