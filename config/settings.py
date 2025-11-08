@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'apps.users',
-    'apps.documents'
+    'apps.documents',
+    'storages'
 ]
 
 MIDDLEWARE = [
@@ -131,3 +132,27 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',  # optional for admin/browser testing
+    ]
+}
+
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
+            "access_key": os.getenv("MINIO_ACCESS_KEY", "minioadmin"),
+            "secret_key": os.getenv("MINIO_SECRET_KEY", "minioadmin"),
+            "bucket_name": os.getenv("MINIO_BUCKET_NAME", "documents"),
+            "endpoint_url": os.getenv("MINIO_ENDPOINT", "http://localhost:9000"),
+            "region_name": os.getenv("MINIO_REGION", "us-east-1"),
+        },
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
