@@ -10,3 +10,4 @@ class DocumentViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)  # Automatically assign the logged-in user
+
