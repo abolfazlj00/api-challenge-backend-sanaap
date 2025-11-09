@@ -98,9 +98,9 @@ password: admin123
 
 | Endpoint          | Method         | Description                                 |
 | ----------------- | -------------- | ------------------------------------------- |
-| `/api/login/`     | POST           | Login with username/password, returns token |
-| `/api/users/`     | GET/POST/PATCH | Admin-only user management                  |
-| `/api/documents/` | CRUD           | Document API with RBAC                      |
+| `/users/login/`     | POST           | Login with username/password, returns token |
+| `/users/`     | GET/POST/PATCH | Admin-only user management                  |
+| `/api/v1/documents/` | CRUD           | Document API with RBAC                      |
 
 > Use the token from login for authenticated requests.
 
